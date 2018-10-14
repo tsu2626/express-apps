@@ -3,6 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
+
+var session_opt = {
+  secret: 'keyboad cat',//秘密キー
+  resave: false,//セッションストアに強制的に保存
+  saveUninitialze: false, //初期化されていない値を強制保存
+  cookie: { maxAge: 60 * 60 * 1000 }//クッキーの保存時間
+};
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -19,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(session_opt));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
