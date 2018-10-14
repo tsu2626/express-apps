@@ -1,8 +1,38 @@
 extends layout
 
 block content
-  h1= title
-  p #{content}
-  form(method="post" action="hello/confirm")
-    input(type="text" name="userName")
-    input(type="submit" name="送信")
+  //- h1= title
+  //- p #{content}
+  //- form(method="post" action="hello/confirm")
+  //-   input(type="text" name="userName")
+  //-   input(type="submit" name="送信")
+  head
+    meta(http-equiv="content-type"
+      content="text/html; charaset=UTF-8"
+    )
+    h1= title
+    script(src="/jquery")
+    link(rel='stylesheet' href='/stylesheets/style.css')
+    
+    script.
+      $(document).ready(function(){
+        $('#btn').click(() => {
+          var n = $('num').val();
+          $.getJSON("/ajax?id=" + n, (json) => {
+            var msg = '<table>' + 
+              '<tr><th>名前</th>'
+              '<td>' +json.name + '</td></tr>' +
+              '<tr><th>年齢</th>' +
+              '<td>' +json.age + '</td></tr>' +
+              '<tr><th>メール</th>' +
+              '<td>' +json.mail + '</td></tr>' +
+              '</table>';
+            $('#msg').html(msg);
+          });
+        });
+      });
+  body
+    div(role="main")
+      p(id="mag" content)
+      input(type="text" name="num" id="num")
+      input(type="button" id="btn" value="GET")
