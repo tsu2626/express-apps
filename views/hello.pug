@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  p #{content}
+  form(method="post" action="hello/confirm")
+    input(type="text" name="userName")
+    input(type="submit" name="送信")
