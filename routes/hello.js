@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/confirm', (req, res, next) => {
   var lastName = req.body['userName'];
-  req.session.userName = lastName
+  req.session.userName = lastName;
   var data = {
     title: '登録情報の確認完了！',
     content: "直近の確認者:" +  req.session.userName

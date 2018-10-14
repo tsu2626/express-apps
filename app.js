@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
+var jquery = require('express-jquery');
 
 var session_opt = {
   secret: 'keyboad cat',//秘密キー
@@ -15,6 +16,7 @@ var session_opt = {
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var helloRouter = require('./routes/hello');
+var ajaxRouter = require('./routes/ajax');
 
 var app = express();
 
@@ -28,10 +30,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session(session_opt));
+app.use(jquery('/jquery'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/hello', helloRouter);
+app.use('/ajax', ajaxRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
